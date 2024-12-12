@@ -14,6 +14,7 @@
             <table>
                 <thead>
                     <tr>
+                        <th>Serial</th> <!-- Column for serial number -->
                         <th>Medication</th>
                         <th>Dosage</th>
                         <th>Time</th>
@@ -24,16 +25,17 @@
                 </thead>
                 <tbody>
                     {% if medications %}
-                        {% for medication in medications %}
+                        {% for item in medications %}
                             <tr>
-                                <td>{{ medication[0] }}</td>
-                                <td>{{ medication[1] }}</td>
-                                <td>{{ medication[2] }}</td>
-                                <td>{{ medication[3] }}</td>
-                                <td>{{ medication[4] }}</td>
+                                <td>{{ item.serial }}</td> <!-- Display the serial number -->
+                                <td>{{ item.medication[1] }}</td>
+                                <td>{{ item.medication[2] }}</td>
+                                <td>{{ item.medication[3] }}</td>
+                                <td>{{ item.medication[4] }}</td>
+                                <td>{{ item.medication[5] }}</td>
                                 <td>
                                     <!-- Delete button that posts to /delete_medication route -->
-                                    <form action="{{ url_for('delete_medication', med_id=medication[0]) }}" method="POST" style="display:inline;">
+                                    <form action="{{ url_for('delete_medication', med_id=item.medication[0]) }}" method="POST" style="display:inline;">
                                         <button type="submit" class="btn btn-danger">Delete</button>
                                     </form>
                                 </td>
@@ -41,7 +43,7 @@
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="6">No medications scheduled.</td>
+                            <td colspan="7">No medications scheduled.</td> <!-- Updated colspan -->
                         </tr>
                     {% endif %}
                 </tbody>
