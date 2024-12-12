@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule Medication</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="schedule-page">
+    <div class="schedule-container">
+        <h1>Schedule a Medication Reminder</h1>
+        <form method="POST">
+            <div class="form-group">
+                <label for="med_name">Medication Name:</label>
+                <input type="text" name="med_name" id="med_name" required>
+            </div>
+            <div class="form-group">
+                <label for="dosage">Dosage:</label>
+                <input type="text" name="dosage" id="dosage" required>
+            </div>
+            <div class="form-group">
+                <label for="time">Time:</label>
+                <input type="time" name="time" id="time" required>
+            </div>
+            <div class="form-group">
+                <label for="caretaker_phone">Caretaker Phone:</label>
+                <input type="tel" name="caretaker_phone" id="caretaker_phone" required>
+            </div>
+            <div class="form-group">
+                <label for="caretaker_email">Caretaker Email:</label>
+                <input type="email" name="caretaker_email" id="caretaker_email" required>
+            </div>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+    </div>
+</body>
+</html>

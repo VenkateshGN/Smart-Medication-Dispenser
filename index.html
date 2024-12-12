@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome - Medication Reminder System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="index-page">
+    <div class="index-container">
+        <div class="index-content">
+            <h1>Welcome to the Medication Reminder System</h1>
+            <p class="purpose-description">
+                This system helps individuals manage their medication schedules and ensures that they never miss a dose.
+                With automated reminders sent via SMS and email, you can stay on top of your health, and your caretaker will also be notified about your medication schedule.
+            </p>
+            
+            <div class="button-container">
+                <a href="{{ url_for('login') }}" class="btn btn-primary">Login</a>
+                <a href="{{ url_for('register') }}" class="btn btn-primary">Register</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

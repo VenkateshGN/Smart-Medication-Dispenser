@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-container">
+        <div class="dashboard-content">
+            <h1>Welcome to Your Dashboard</h1>
+            <h3>Your Medications</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Medication</th>
+                        <th>Dosage</th>
+                        <th>Time</th>
+                        <th>Caretaker's Phone</th>
+                        <th>Caretaker's Email</th>
+                        <th>Action</th> <!-- New column for actions -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if medications %}
+                        {% for medication in medications %}
+                            <tr>
+                                <td>{{ medication[0] }}</td>
+                                <td>{{ medication[1] }}</td>
+                                <td>{{ medication[2] }}</td>
+                                <td>{{ medication[3] }}</td>
+                                <td>{{ medication[4] }}</td>
+                                <td>
+                                    <!-- Delete button that posts to /delete_medication route -->
+                                    <form action="{{ url_for('delete_medication', med_id=medication[0]) }}" method="POST" style="display:inline;">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6">No medications scheduled.</td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+            <a href="{{ url_for('schedule') }}" class="btn btn-primary">Schedule Medication</a>
+            <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
