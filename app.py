@@ -143,10 +143,16 @@ def dashboard():
             SELECT id, med_name, dosage, time, caretaker_phone, caretaker_email 
             FROM medications 
             WHERE user_id = ?
+            ORDER BY id
         """, (user_id,))
         medications = cursor.fetchall()
 
-    return render_template("dashboard.html", medications=medications)
+    # Generate serial numbers dynamically
+    medications_with_serial = [{"serial": index + 1, "medication": med} for index, med in enumerate(medications)]
+
+    return render_template("dashboard.html", medications=medications_with_serial)
+
+
 
 @app.route("/schedule", methods=["GET", "POST"])
 def schedule():
@@ -181,16 +187,28 @@ def schedule():
 def delete_medication(med_id):
     with sqlite3.connect(DATABASE) as conn:
         cursor = conn.cursor()
-        
+
         # Delete the medication from the 'medications' table using the med_id
         cursor.execute("DELETE FROM medications WHERE id = ?", (med_id,))
         conn.commit()
-        
+
         # Optionally, you can also remove any notifications related to this medication
         cursor.execute("DELETE FROM notifications WHERE med_id = ?", (med_id,))
         conn.commit()
 
+        # Update the serial number (ID) of the remaining medications
+        cursor.execute("SELECT id FROM medications ORDER BY id")
+        medications = cursor.fetchall()
+
+        # Reassign IDs to medications
+        for index, (medication_id,) in enumerate(medications):
+            new_id = index + 1  # New serial number starts from 1
+            if medication_id != new_id:
+                cursor.execute("UPDATE medications SET id = ? WHERE id = ?", (new_id, medication_id))
+                conn.commit()
+
     return redirect(url_for('dashboard'))  # Redirect back to the dashboard page
+
 
 @app.route("/logout")
 def logout():
